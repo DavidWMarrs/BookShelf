@@ -69,7 +69,8 @@
                 crossorigin="anonymous"
                 integrity="sha384-/EjRuG6YTb6zCFou+DBnYCi5u9E1RjUMJanyGOL7DUYLp6wSCUuHNhd58uoGj7jh">
         </script>
-        <script src="~/js/site.min.js" asp-append-version="true"></script>
+        @* site.min.js seems to be blank (at least on Azure) so go with original for now *@
+        <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
 
     @RenderSection("Scripts", required: false)

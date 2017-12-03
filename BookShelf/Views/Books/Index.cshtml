@@ -35,8 +35,8 @@
                 <h3 data-bind="text: Title"></h3>
                 <div>Author: <span data-bind="text: Author().name"></span></div>
                 <div>
-                    <button data-bind="click: ToggleLoanStatus">Loaned out</button>
-                    <a href="#" data-bind="click: $root.Delete">Delete</a>
+                    <button class="btn btn-primary" data-bind="click: ToggleLoanStatus">Loaned out &gt;</button>
+                    <button class="btn btn-danger" data-bind="click: $root.Delete">Delete</button>
                 </div>
             </div>
         </div>
@@ -48,8 +48,8 @@
                 <h3 data-bind="text: Title"></h3>
                 <div>Author: <span data-bind="text: Author().name"></span></div>
                 <div>
-                    <button data-bind="click: ToggleLoanStatus">Returned</button>
-                    <a href="#" data-bind="click: $root.Delete">Delete</a>
+                    <button class="btn btn-success" data-bind="click: ToggleLoanStatus">&lt; Returned</button>
+                    <button class="btn btn-danger" data-bind="click: $root.Delete">Delete</button>
                 </div>
             </div>
         </div>
@@ -60,19 +60,7 @@
     <script>
         var authors = @Json.Serialize(Model.Authors);
 
-            @*[
-            { Id: 1, Name: "Author A" },
-            { Id: 2, Name: "Author B" },
-            { Id: 3, Name: "Author C" }
-        ];*@
-
         var books = @Json.Serialize(Model.Books);
-
-            @*[
-            { id: 1, title: "Book A", author: authors[0] },
-            { id: 2, title: "Book B", author: authors[1] },
-            { id: 3, title: "Book C", author: authors[2], onLoan: true}
-        ]*@
 
         var bookViewModels = [];
 
