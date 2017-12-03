@@ -10,6 +10,8 @@ namespace BookShelf.Models
 
         public DateTime Created { get; set; }
 
+        public string UserId { get; set; }
+
         public Author()
         {
             Created = DateTime.Now;

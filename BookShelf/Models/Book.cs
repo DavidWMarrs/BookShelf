@@ -16,6 +16,8 @@ namespace BookShelf.Models
 
         public DateTime Created { get; protected set; }
 
+        public string UserId { get; set; }
+
         public Book()
         {
             Created = DateTime.Now;

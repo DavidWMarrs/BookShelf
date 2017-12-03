@@ -4,11 +4,13 @@ namespace BookShelf.Infrastructure.Factories
 {
     public class AuthorFactory
     {
-        public static Author CreateAuthor(string name)
+        public static Author CreateAuthor(string name, string userId)
         {
             return new Author()
             {
-                Name = name
+                Name = name,
+                UserId = userId
+                
             };
         }
     }
