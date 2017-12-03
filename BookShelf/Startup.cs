@@ -42,6 +42,7 @@ namespace BookShelf
             services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IBookService, BookService>();
             services.AddScoped<IAuthorService, AuthorService>();
+            services.AddScoped<ISetupService, SetupService>();
 
             services.AddMvc();
         }

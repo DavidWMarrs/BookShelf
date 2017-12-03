@@ -24,17 +24,20 @@ namespace BookShelf.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
+        private readonly ISetupService _setupService;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
-            ILogger<AccountController> logger)
+            ILogger<AccountController> logger,
+            ISetupService setupService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
+            _setupService = setupService;
         }
 
         [TempData]
@@ -232,6 +235,10 @@ namespace BookShelf.Controllers
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation("User created a new account with password.");
+
+                    // Create some example books for first login
+                    _setupService.SetupBooks(user.Id);
+
                     return RedirectToLocal(returnUrl);
                 }
                 AddErrors(result);
