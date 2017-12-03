@@ -1,0 +1,96 @@
+﻿@model BookIndexViewModel
+
+@using BookShelf.Models.BookViewModels;
+
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="row">
+    <div class="col-sm-4">
+        <h2>Manage</h2>
+        <div>
+            <h3>Add Book</h3>
+            <div class="form-group">
+                <label for="AddBookFormTitle">Title</label>
+                <input type="text" class="form-control" data-bind="value:AddBookForm.Title, enable:AddBookForm.Enabled" id="AddBookFormTitle" />
+            </div>
+            <div class="form-group">
+                <label for="AddBookFormAuthor">Author</label>
+                <select class="form-control" data-bind="value:AddBookForm.Author, options:Authors, optionsText:'name', enable:AddBookForm.Enabled" id="AddBookFormAuthor"></select>
+            </div>
+            <button class="btn btn-default" data-bind="click:AddBook, enable:AddBookForm.Enabled">Add</button>
+        </div>
+        <div>
+            <h3>Add Author</h3>
+            <div class="form-group">
+                <input type="text" class="form-control" data-bind="value:AddAuthorForm.Name, enable:AddAuthorForm.Enabled" />
+            </div>
+            <button class="btn btn-default" data-bind="click:AddAuthor, enable:AddAuthorForm.Enabled">Add</button>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <h2>Available</h2>
+        <div data-bind="foreach: In">
+            <div>
+                <h3 data-bind="text: Title"></h3>
+                <div>Author: <span data-bind="text: Author().name"></span></div>
+                <div>
+                    <button data-bind="click: ToggleLoanStatus">Loaned out</button>
+                    <a href="#" data-bind="click: $root.Delete">Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <h2>On loan</h2>
+        <div data-bind="foreach: Out">
+            <div>
+                <h3 data-bind="text: Title"></h3>
+                <div>Author: <span data-bind="text: Author().name"></span></div>
+                <div>
+                    <button data-bind="click: ToggleLoanStatus">Returned</button>
+                    <a href="#" data-bind="click: $root.Delete">Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        var authors = @Json.Serialize(Model.Authors);
+
+            @*[
+            { Id: 1, Name: "Author A" },
+            { Id: 2, Name: "Author B" },
+            { Id: 3, Name: "Author C" }
+        ];*@
+
+        var books = @Json.Serialize(Model.Books);
+
+            @*[
+            { id: 1, title: "Book A", author: authors[0] },
+            { id: 2, title: "Book B", author: authors[1] },
+            { id: 3, title: "Book C", author: authors[2], onLoan: true}
+        ]*@
+
+        var bookViewModels = [];
+
+        for (var i = 0; i < books.length; i++) {
+
+            var author;
+
+            for (var j = 0; j < authors.length; j++) {
+                if (authors[j].id == books[i].authorId) {
+                    author = authors[j];
+                    break;
+                }
+            }
+
+            bookViewModels.push(new BookViewModel(books[i].id, books[i].title, author, books[i].onLoan));
+        }
+
+        ko.applyBindings(new StackViewModel(bookViewModels, authors));
+
+    </script>
+}
